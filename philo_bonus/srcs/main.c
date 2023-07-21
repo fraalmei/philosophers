@@ -6,7 +6,7 @@
 /*   By: fraalmei <fraalmei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 10:58:58 by fraalmei          #+#    #+#             */
-/*   Updated: 2023/07/12 16:45:01 by fraalmei         ###   ########.fr       */
+/*   Updated: 2023/07/21 18:49:05 by fraalmei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ void	exe_threads(t_table *table)
 {
 	create_philos(table);
 	parse_philos(table);
-	//create_threads(table);
-	//join_threads(table);
 }
 
 /// @brief función main para iniciar el programa
