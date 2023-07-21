@@ -6,7 +6,7 @@
 /*   By: fraalmei <fraalmei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:05:25 by fraalmei          #+#    #+#             */
-/*   Updated: 2023/07/21 14:45:08 by fraalmei         ###   ########.fr       */
+/*   Updated: 2023/07/21 18:23:31 by fraalmei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static int	take_f(t_philin *philo)
 	if (philo->fork_minus->n == philo->fork_plus.n && \
 			!(philo->fork_minus->mutex == 0 && philo->fork_plus.mutex == 0))
 		return (0);
-	usleep (5);
 	pthread_mutex_lock(&philo->fork_minus->use);
 	pthread_mutex_lock(&philo->fork_plus.use);
 	philo->fork_minus->mutex = 1;
@@ -58,7 +57,8 @@ void	*philo(void *arg)
 
 	philo = ((t_philin *) arg);
 	init_thread(philo);
-	pthread_mutex_lock(&philo->mutex);
+	if (philo->n == 0)
+		printf("joder que se ejecuta\n");
 	while (philo->table->dead == 0)
 	{
 		if (take_f(philo))
@@ -72,8 +72,7 @@ void	*philo(void *arg)
 		if (philo->think++ == 0)
 			print("is thinking", philo);
 	}
-	pthread_mutex_unlock(&philo->mutex);
-	pthread_exit (NULL);
+	return (NULL);
 }
 
 /// @brief create a new philosopher struct
@@ -102,7 +101,6 @@ static t_philin	*new_phil(int n, t_table *table, t_forkin *otr_f)
 	philo->table = table;
 	philo->t_eat = table->t_eat;
 	philo->t_sleep = table->t_sleep;
-	pthread_mutex_init(&philo->mutex, NULL);
 	pthread_mutex_init(&philo->fork_plus.use, NULL);
 	return (philo);
 }

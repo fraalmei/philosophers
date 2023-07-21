@@ -6,7 +6,7 @@
 #    By: fraalmei <fraalmei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:16:54 by fraalmei          #+#    #+#              #
-#    Updated: 2023/07/21 13:49:51 by fraalmei         ###   ########.fr        #
+#    Updated: 2023/07/21 18:22:00 by fraalmei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ CFLAGS	= -Wall -Werror -Wextra #-pedantic
 
 #EXTRA_FLAGS = -S #create the program or archive to assembler
 
-LEAK_FLAGS	= -fsanitize=thread -g3 #-fsanitize=address 
+LEAK_FLAGS	= -fsanitize=thread -g3 #-fsanitize=address
 
 INCLUDES	= -I $(INCLUDE_DIR) -pthread
 

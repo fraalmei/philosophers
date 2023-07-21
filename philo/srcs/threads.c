@@ -6,7 +6,7 @@
 /*   By: fraalmei <fraalmei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:34:20 by fraalmei          #+#    #+#             */
-/*   Updated: 2023/07/21 15:22:19 by fraalmei         ###   ########.fr       */
+/*   Updated: 2023/07/21 18:24:10 by fraalmei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	*check_dead(void *arg)
 	int				i;
 
 	table = ((t_table *) arg);
-	pthread_mutex_lock(&table->m_dead);
 	i = 0;
 	wait_to(table->t_start, 1000 + (table->t_eat / 2));
 	while (!table->dead)
@@ -66,7 +65,6 @@ void	*check_dead(void *arg)
 			i = 0;
 		}
 	}
-	pthread_mutex_unlock(&table->m_dead);
 	pthread_exit (NULL);
 }
 
@@ -97,7 +95,6 @@ int	create_threads(t_table *table)
 
 	i = 0;
 	pthread_mutex_init(&(table->print), NULL);
-	pthread_mutex_init(&table->m_dead, NULL);
 	while (i < table->n_philos)
 	{
 		if (pthread_create(&table->philo[i]->thread, NULL, \
@@ -116,14 +113,10 @@ int	join_threads(t_table *table)
 	int			i;
 
 	i = 0;
-	pthread_mutex_lock(&table->m_dead);
 	pthread_join(table->c_dead, NULL);
-	pthread_mutex_unlock(&table->m_dead);
 	while (i < table->n_philos)
 	{
-		pthread_mutex_lock(&table->philo[i]->mutex);
 		pthread_join(table->philo[i]->thread, NULL);
-		pthread_mutex_unlock(&table->philo[i]->mutex);
 		i++;
 	}
 	return (0);

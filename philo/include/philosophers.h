@@ -6,7 +6,7 @@
 /*   By: fraalmei <fraalmei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:48:57 by fraalmei          #+#    #+#             */
-/*   Updated: 2023/07/21 14:53:31 by fraalmei         ###   ########.fr       */
+/*   Updated: 2023/07/21 18:23:09 by fraalmei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_philin
 	t_forkin					*fork_minus;
 	t_forkin					fork_plus;
 	pthread_t					thread;
-	pthread_mutex_t				mutex;
 	struct s_table				*table;
 }				t_philin;
 
@@ -63,7 +62,6 @@ typedef struct s_table
 	int					dead;
 	t_philin			**philo;
 	pthread_mutex_t		print;
-	pthread_mutex_t		m_dead;
 	pthread_t			c_dead;
 }				t_table;
 
