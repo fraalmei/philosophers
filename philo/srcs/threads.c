@@ -6,7 +6,7 @@
 /*   By: fraalmei <fraalmei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:34:20 by fraalmei          #+#    #+#             */
-/*   Updated: 2023/07/21 18:24:10 by fraalmei         ###   ########.fr       */
+/*   Updated: 2023/07/22 11:48:07 by fraalmei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	*check_dead(void *arg)
 			i = 0;
 		}
 	}
-	pthread_exit (NULL);
+	return (NULL);
 }
 
 /// @brief function to start the philosophers thread
@@ -102,6 +102,7 @@ int	create_threads(t_table *table)
 			return (1);
 		i++;
 	}
+	pthread_create(&table->c_dead, NULL, check_dead, (void *)table);
 	return (0);
 }
 

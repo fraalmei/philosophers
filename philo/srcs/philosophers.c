@@ -6,7 +6,7 @@
 /*   By: fraalmei <fraalmei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:05:25 by fraalmei          #+#    #+#             */
-/*   Updated: 2023/07/21 18:23:31 by fraalmei         ###   ########.fr       */
+/*   Updated: 2023/07/22 11:47:45 by fraalmei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,14 @@
 /// @return 1 if it works correctly
 static int	take_f(t_philin *philo)
 {
-	if (philo->fork_minus->n == philo->fork_plus.n && \
-			!(philo->fork_minus->mutex == 0 && philo->fork_plus.mutex == 0))
+	if (philo->fork_minus->n == philo->fork_plus.n)
 		return (0);
 	pthread_mutex_lock(&philo->fork_minus->use);
 	pthread_mutex_lock(&philo->fork_plus.use);
-	philo->fork_minus->mutex = 1;
-	philo->fork_plus.mutex = 1;
 	print("has taken a fork", philo);
 	philo->lst_meal = get_time();
 	print("is eating", philo);
 	slp(philo->t_eat);
-	philo->fork_minus->mutex = 0;
-	philo->fork_plus.mutex = 0;
 	pthread_mutex_unlock(&philo->fork_minus->use);
 	pthread_mutex_unlock(&philo->fork_plus.use);
 	return (1);
@@ -57,8 +52,6 @@ void	*philo(void *arg)
 
 	philo = ((t_philin *) arg);
 	init_thread(philo);
-	if (philo->n == 0)
-		printf("joder que se ejecuta\n");
 	while (philo->table->dead == 0)
 	{
 		if (take_f(philo))
@@ -72,6 +65,7 @@ void	*philo(void *arg)
 		if (philo->think++ == 0)
 			print("is thinking", philo);
 	}
+	pthread_detach(philo->thread);
 	return (NULL);
 }
 
