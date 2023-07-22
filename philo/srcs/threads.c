@@ -6,7 +6,7 @@
 /*   By: fraalmei <fraalmei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:34:20 by fraalmei          #+#    #+#             */
-/*   Updated: 2023/07/22 11:48:07 by fraalmei         ###   ########.fr       */
+/*   Updated: 2023/07/22 15:03:29 by fraalmei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,13 @@ void	*check_dead(void *arg)
 	wait_to(table->t_start, 1000 + (table->t_eat / 2));
 	while (!table->dead)
 	{
+		pthread_mutex_lock(&table->philo[i]->philo);
 		if ((get_time() - table->philo[i]->lst_meal) > table->t_die)
 		{
 			print("died", table->philo[i]);
 			table->dead = 1;
 		}
+		pthread_mutex_unlock(&table->philo[i]->philo);
 		i++;
 		if (i == table->n_philos)
 		{
@@ -97,6 +99,7 @@ int	create_threads(t_table *table)
 	pthread_mutex_init(&(table->print), NULL);
 	while (i < table->n_philos)
 	{
+		pthread_mutex_init(&(table->philo[i]->philo), NULL);
 		if (pthread_create(&table->philo[i]->thread, NULL, \
 				philo, (void *)table->philo[i]))
 			return (1);

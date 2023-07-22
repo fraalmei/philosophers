@@ -6,7 +6,7 @@
 /*   By: fraalmei <fraalmei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 10:35:18 by fraalmei          #+#    #+#             */
-/*   Updated: 2023/07/22 11:47:17 by fraalmei         ###   ########.fr       */
+/*   Updated: 2023/07/22 15:21:32 by fraalmei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int	free_all(t_table *table)
 		{
 			pthread_mutex_destroy \
 				(&table->philo[table->n_philos]->fork_plus.use);
+			pthread_mutex_destroy \
+				(&table->philo[table->n_philos]->philo);
 			free(table->philo[table->n_philos]);
 		}
 	}

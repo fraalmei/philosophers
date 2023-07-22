@@ -6,7 +6,7 @@
 /*   By: fraalmei <fraalmei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:05:25 by fraalmei          #+#    #+#             */
-/*   Updated: 2023/07/22 11:47:45 by fraalmei         ###   ########.fr       */
+/*   Updated: 2023/07/22 15:05:28 by fraalmei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,15 @@
 /// @return 1 if it works correctly
 static int	take_f(t_philin *philo)
 {
-	if (philo->fork_minus->n == philo->fork_plus.n)
+	if (philo->fork_minus->n == philo->fork_plus.n && philo->table->dead == 0)
 		return (0);
+	pthread_mutex_lock(&philo->philo);
 	pthread_mutex_lock(&philo->fork_minus->use);
 	pthread_mutex_lock(&philo->fork_plus.use);
 	print("has taken a fork", philo);
 	philo->lst_meal = get_time();
 	print("is eating", philo);
+	pthread_mutex_unlock(&philo->philo);
 	slp(philo->t_eat);
 	pthread_mutex_unlock(&philo->fork_minus->use);
 	pthread_mutex_unlock(&philo->fork_plus.use);
@@ -91,7 +93,6 @@ static t_philin	*new_phil(int n, t_table *table, t_forkin *otr_f)
 	philo->think = 0;
 	philo->fork_minus = otr_f;
 	philo->fork_plus.n = n;
-	philo->fork_plus.mutex = 0;
 	philo->table = table;
 	philo->t_eat = table->t_eat;
 	philo->t_sleep = table->t_sleep;

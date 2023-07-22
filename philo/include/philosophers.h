@@ -6,7 +6,7 @@
 /*   By: fraalmei <fraalmei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:48:57 by fraalmei          #+#    #+#             */
-/*   Updated: 2023/07/22 11:48:06 by fraalmei         ###   ########.fr       */
+/*   Updated: 2023/07/22 15:00:56 by fraalmei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct s_forkin
 {
 	int					n;
 	pthread_mutex_t		use;
-	int					mutex;
 }						t_forkin;
 
 /// @brief estructura filosofo
@@ -48,6 +47,7 @@ typedef struct s_philin
 	t_forkin					*fork_minus;
 	t_forkin					fork_plus;
 	pthread_t					thread;
+	pthread_mutex_t				philo;
 	struct s_table				*table;
 }				t_philin;
 
@@ -64,8 +64,6 @@ typedef struct s_table
 	pthread_mutex_t		print;
 	pthread_t			c_dead;
 }				t_table;
-
-	// main.c
 
 	//parse.c
 void		*ft_calloc(size_t count, size_t size);
